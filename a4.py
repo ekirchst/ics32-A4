@@ -6,7 +6,8 @@ from pathlib import Path
 import ui as ui
 import admin as admin
 import user as user
-from ds_client import send
+# port = 168.235.86.101
+
 
 if __name__ == "__main__":
     
