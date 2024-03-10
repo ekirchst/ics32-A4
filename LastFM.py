@@ -16,7 +16,7 @@ class LastFM:
     def set_apikey(self, apikey:str) -> None:
         self.apikey = apikey
     
-    def get_artist_info(self, artist):
+    def get_artist_info(self, artist="Harry Styles"):
         try:
             artist = quote(artist)
             addition = 'artist.getinfo'
@@ -26,8 +26,16 @@ class LastFM:
             with open("lastfm.json", "w") as file:
                 js.dump(re, file)
             artist_info = re['artist']
-            self.artist_listeners = re['artist']['stats']['listeners'].strip()
-            self.artist_playcount = re['artist']['stats']['playcount'].strip()
+            self.artist_listeners = re['artist']['stats']['listeners']
+            self.artist_playcount = re['artist']['stats']['playcount']
             return artist_info
         except request.URLError as e:
             print(f"Error: {e}") 
+
+    def tranclude(self, message:str) -> str:
+        if "@L" in message:
+            new = message.replace("@LastFM", self.artist_listeners)
+            return new
+        if "@l" in message:
+            new = message.replace("@lastFM", self.artist_listeners)
+            return new

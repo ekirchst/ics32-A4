@@ -14,6 +14,8 @@ C -- Create a new file in a specified path
 D -- Deleted a file
 R -- Read a file
 O -- Open a file
+E -- Edit a file
+P -- print file contents
 Help -- Relist commands
 """
 

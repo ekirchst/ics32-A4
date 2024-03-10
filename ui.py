@@ -9,6 +9,7 @@ import user as use
 from Profile import Profile, Post
 from ds_client import send
 import OpenWeather as opw
+import LastFM as lfm
 
 
 server_adress = "168.235.86.101"
@@ -63,6 +64,9 @@ def comm():
             edit_file(command)
         elif command_type == "P":
             print_data(command)
+        else:
+            print("Please enter a valid command")
+            comm()
 
 
 def file_sort(a, b):
@@ -343,11 +347,33 @@ def edit_file(a):
         elif "-addpost" in user_in:
             post_content = input("Enter new post: ")
             if "@W" in post_content or "@w" in post_content:
-                OPEN = opw.OpenWeather()
-                OPEN.set_apikey("a3049970138b25f903d606cc94d57614")
-                OPEN.load_data()
-                post_content = OPEN.tranclude(post_content)
-                print(post_content)
+                z = input("enter zipcode (press enter to default to irvine): ")
+                if z == '':
+                    OPEN = opw.OpenWeather()
+                    OPEN.set_apikey("a3049970138b25f903d606cc94d57614")
+                    OPEN.load_data()
+                    post_content = OPEN.tranclude(post_content)
+                else:
+                    c = input("enter country code: ")
+                    OPEN = opw.OpenWeather(z, c)
+                    OPEN.set_apikey("a3049970138b25f903d606cc94d57614")
+                    OPEN.load_data()
+                    post_content = OPEN.tranclude(post_content)
+            if "@L" in post_content or "@l" in post_content:
+                a = input("enter artist name(press enter to default to Harry Styles): ")
+                if a == '':
+                    greg = lfm.LastFM()
+                    greg.set_apikey("95bfb090ae0b442d80486d3e80fb7df5")
+                    greg.get_artist_info()
+                    print(greg.get_artist_info())
+                    post_content = greg.tranclude(post_content)
+                else:
+                    greg = lfm.LastFM(a)
+                    greg.set_apikey("95bfb090ae0b442d80486d3e80fb7df5")
+                    greg.get_artist_info()
+                    print(greg.get_artist_info())
+                    post_content = greg.tranclude(post_content)
+                
             new_post = Post(post_content)
             profile.add_post(new_post)
             profile.save_profile(temp_path)
