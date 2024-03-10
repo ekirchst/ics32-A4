@@ -36,10 +36,14 @@ def path_help():
 
 
 def get_path():
-    print("Please enter a path:")
+    print("Please enter the path of a directory:")
     path = input()
     return path
 
+def get_path_dsu():
+    print("Please enter the path of a .dsu file:")
+    path = input()
+    return path
 
 def recursive():
     print("would you like to search recursively? Y/N")

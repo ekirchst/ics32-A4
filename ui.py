@@ -193,8 +193,7 @@ def create_file(a):
         profile.save_profile(path = line)
         f = open(line, 'a')
         temp_path = file_path
-    print(f'{file_path} OPENED')
-    print(f"this is the way  {file_path}")
+    print(f'{line} OPENED')
     return temp_path
 
 
@@ -248,7 +247,7 @@ def read_file(a):
                 print("no such file exists")
         print("")
     else:
-        path = use.get_path()
+        path = use.get_path_dsu()
         if path[-3:] == 'dsu':
             if check_file(path):
                 with open(path, 'r') as p:
@@ -275,17 +274,19 @@ def open_file(a):
         print(temp_path + " has been opened")
         return temp_path
     else:
-        path = use.get_path()
-        print("Without the file extention,")
-        name = use.file_name()
-        temp_path = path + "\\" + name
-        f = open(temp_path, 'r+')
-        print(temp_path + ' Has been opened')
+        path = use.get_path_dsu()
+        if path[-4:] != ".dsu":
+            print("please enter a dsu file path")
+            open_file("temp")
+        elif path == 'Q':
+            quit()
+        f = open(path, 'r+')
+        print(path + ' Has been opened')
         for line in f:
             print("hehehehe")
             print(line.strip())
     comm()
-    return temp_path
+    return path
         
 
 def edit_file(a):
