@@ -10,7 +10,7 @@ class OpenWeather:
     '''
     Weather API Class Created to Interact with OpenWeather api
     '''
-    def __init__(self, zipcode, ccode):
+    def __init__(self, zipcode="92697", ccode="US"):
         '''
         Initializes OpenWeather Object
         Takes in zipcode and ccode
@@ -46,3 +46,12 @@ class OpenWeather:
             print(f"ERROR {e}")
         except js.JSONDecodeError as e:
             print(f"ERROR {e}")
+    
+    
+    def tranclude(self, message:str) -> str:
+        if "@W" in message:
+            new = message.replace("@Weather", self.description)
+            return new
+        if "@w" in message:
+            new = message.replace("@weather", self.description)
+            return new

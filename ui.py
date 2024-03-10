@@ -8,6 +8,7 @@ import admin as admin
 import user as use
 from Profile import Profile, Post
 from ds_client import send
+import OpenWeather as opw
 
 
 server_adress = "168.235.86.101"
@@ -341,6 +342,12 @@ def edit_file(a):
             profile.save_profile(temp_path)
         elif "-addpost" in user_in:
             post_content = input("Enter new post: ")
+            if "@W" in post_content or "@w" in post_content:
+                OPEN = opw.OpenWeather()
+                OPEN.set_apikey("a3049970138b25f903d606cc94d57614")
+                OPEN.load_data()
+                post_content = OPEN.tranclude(post_content)
+                print(post_content)
             new_post = Post(post_content)
             profile.add_post(new_post)
             profile.save_profile(temp_path)

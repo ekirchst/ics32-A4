@@ -4,6 +4,8 @@
 from urllib import request
 import json as js
 from datetime import datetime
+from urllib.parse import quote
+
 
 class LastFM:
 
@@ -16,6 +18,7 @@ class LastFM:
     
     def get_artist_info(self, artist):
         try:
+            artist = quote(artist)
             addition = 'artist.getinfo'
             link = f'{self.url}?method={addition}&artist={artist}&api_key={self.apikey}&format=json'
             response = request.urlopen(link)
@@ -23,6 +26,8 @@ class LastFM:
             with open("lastfm.json", "w") as file:
                 js.dump(re, file)
             artist_info = re['artist']
+            self.artist_listeners = re['artist']['stats']['listeners'].strip()
+            self.artist_playcount = re['artist']['stats']['playcount'].strip()
             return artist_info
         except request.URLError as e:
             print(f"Error: {e}") 

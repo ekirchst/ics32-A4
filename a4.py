@@ -7,6 +7,7 @@ import ui as ui
 import admin as admin
 import user as user
 import OpenWeather as opw
+import LastFM as lfm
 # port = 168.235.86.101
 
 
@@ -27,10 +28,20 @@ if __name__ == "__main__":
     print(f"The current humidity for {zipcode} is {open_weather.humidity}")
     print(f"The sun will set in {open_weather.city} at {open_weather.sunset}")
 
-    '''
+    lastfm_apikey = '95bfb090ae0b442d80486d3e80fb7df5'
+    lastfm = lfm.LastFM()
+    lastfm.set_apikey(lastfm_apikey)
+    artist = 'Harry Styles'
+    lastfm.get_artist_info(artist)
+
+    print(f"The listeners for {artist} is {lastfm.artist_listeners}")
+    print(f"The playcount for {artist} is {lastfm.artist_playcount}")
+
+
+    
     if ui.user() == 1:
         admin.start()
     else:
         user.comm_list()
         user.start()
-    '''
+    
