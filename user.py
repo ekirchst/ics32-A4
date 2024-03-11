@@ -5,7 +5,9 @@
 from pathlib import Path
 import admin as admin
 import ui as ui
-
+'''
+Module that Holds Basic Functions used in the User Side of the UI
+'''
 
 command_list = """
 L -- List all files in a specified path
@@ -72,7 +74,7 @@ def ending():
     print("would you like to search for a specific file type? Y/N")
     temp = input()
     if temp == 'Y':
-        ending = input("please enter file extention (without a period, ie: txt, jpg, dsu):\n")
+        ending = input("please enter file extention(without ending):\n")
         return ending
     else:
         return None

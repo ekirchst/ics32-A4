@@ -21,8 +21,13 @@ class OpenWeather(WebAPI):
         self.url = 'https://api.openweathermap.org/data/2.5'
 
     def load_data(self) -> None:
+        '''
+        Function to Retrieve Certain Data from the Open Weather API
+        '''
         try:
-            temp = f"{self.url}/weather?zip={self.zip_code},{self.country_code}&appid={self.apikey}"
+            temp1 = f"{self.url}/weather?zip={self.zip_code},"
+            temp2 = f"{self.country_code}&appid={self.apikey}"
+            temp = f"{temp1}{temp2}"
             response = request.urlopen(temp)
             re = js.loads(response.read())
             if response.getcode() != 404 or 503:
@@ -33,7 +38,9 @@ class OpenWeather(WebAPI):
                 self.latitude = re['coord']['lat']
                 self.description = re['weather'][0]['description']
                 self.humidity = re['main']['humidity']
-                self.sunset = datetime.utcfromtimestamp(re['sys']['sunset']).strftime('%Y-%m-%d %H:%M:%S')
+                self.sunset = datetime.utcfromtimestamp(
+                    re['sys']['sunset']
+                    ).strftime('%Y-%m-%d %H:%M:%S')
                 self.city = re['name']
             elif response.getcode() == 404:
                 print("404 ERROR, API UNAVAILABLE")
@@ -45,9 +52,10 @@ class OpenWeather(WebAPI):
             print(f"ERROR {e}")
 
     def transclude(self, message: str) -> str:
-        if "@W" in message:
-            new = message.replace("@Weather", self.description)
-            return new
-        if "@w" in message:
-            new = message.replace("@weather", self.description)
+        '''
+        Function to Replace Keyword "@weather" with Data from Open Weather API
+        '''
+        temp = message.lower()
+        if "@weather" in temp:
+            new = temp.replace("@weather", self.description)
             return new

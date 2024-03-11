@@ -8,7 +8,13 @@ from abc import ABC, abstractmethod
 
 
 class WebAPI(ABC):
+    '''
+    Class that Gets Inherited by Other Classes
+    '''
     def _download_url(self, url: str) -> dict:
+        """
+        Function to Download URL
+        """
         try:
             response = None
             lol = None
@@ -27,6 +33,9 @@ class WebAPI(ABC):
                 return lol
 
     def set_apikey(self, apikey: str) -> None:
+        '''
+        Function to Set API key
+        '''
         self.apikey = apikey
 
     @abstractmethod

@@ -2,7 +2,6 @@
 # ekirchst@uci.edu
 # 59946460
 
-
 from pathlib import Path
 import admin as admin
 import user as use
@@ -19,6 +18,9 @@ temp_path = ''
 
 
 def user():
+    '''
+    Asks User what Mode They Want to Run Program In
+    '''
     user_type = input("Please input user type (\"admin\", \"user\"):  ")
     temp = 0
     if user_type == 'admin':
@@ -29,6 +31,9 @@ def user():
 
 
 def administration(a):
+    '''
+    Sets Global Variable Administrator
+    '''
     global administrator
     if a == 1:
         administrator = True
@@ -38,6 +43,10 @@ def administration(a):
 
 
 def comm():
+    '''
+    Default Function
+    Takes in All Main Command Types
+    '''
     command = input("please enter command:  ")
     command_type = command[0:1]
     if command == 'admin':
@@ -70,11 +79,17 @@ def comm():
 
 
 def file_sort(a, b):
+    '''
+    Function To Sort File
+    '''
     temp = [f for f in a if Path(b, f).is_file()]
     return temp
 
 
 def dir(pathlib_path, path):
+    '''
+    Function to Set Directory
+    '''
     temp = []
     fol = Path(path)
     for item in fol.iterdir():
@@ -84,6 +99,10 @@ def dir(pathlib_path, path):
 
 
 def list_files(a):
+    '''
+    Function to List Files
+    Takes in File Path if Administator
+    '''
     if administrator:
         paths = a.split(' ')
         if len(paths) > 1:
@@ -117,7 +136,12 @@ def list_files(a):
         list_items(path, recursive, files_only, search_file, ending)
 
 
-def list_items(path, recursive=False, files_only=False, search_file=None, ending=None):
+def list_items(path, recursive=False, files_only=False,
+               search_file=None, ending=None):
+    '''
+    Function to List Items in a Directory
+    Includes Recursion
+    '''
     try:
         lip = Path(path).iterdir()
         files = file_sort(lip, path)
@@ -134,12 +158,15 @@ def list_items(path, recursive=False, files_only=False, search_file=None, ending
             for directory in dirs:
                 if not files_only and directory.is_dir():
                     if ending is not None:
-                        list_items(directory, recursive, files_only, search_file, ending)
+                        list_items(directory, recursive,
+                                   files_only, search_file, ending)
                     else:
                         print(directory)
-                        list_items(directory, recursive, files_only, search_file, ending)
+                        list_items(directory, recursive,
+                                   files_only, search_file, ending)
                 elif files_only and directory.is_dir():
-                    list_items(directory, recursive, files_only, search_file, ending)
+                    list_items(directory, recursive,
+                               files_only, search_file, ending)
         elif not files_only and ending is None:
             for directory in dirs:
                 print(directory)
@@ -149,6 +176,9 @@ def list_items(path, recursive=False, files_only=False, search_file=None, ending
 
 
 def create_file(a):
+    '''
+    Function To Create A File
+    '''
     global temp_path
     if administrator:
         paths = a.split(' ')
@@ -163,7 +193,8 @@ def create_file(a):
                 username = None
                 password = None
                 bio = None
-                profile = Profile(username=username, password=password, bio=bio)
+                profile = Profile(username=username,
+                                  password=password, bio=bio)
                 with open(filepath, 'a') as f:
                     print("")
                 f = open(filepath, 'a')
@@ -197,6 +228,9 @@ def create_file(a):
 
 
 def check_file(a):
+    '''
+    Simple Function Checking if a File Exists
+    '''
     if Path(a).exists():
         return True
     else:
@@ -204,6 +238,9 @@ def check_file(a):
 
 
 def del_file(a):
+    '''
+    Function to Delete a File
+    '''
     if administrator:
         paths = a.split(' ')
         path = paths[1]
@@ -230,6 +267,9 @@ def del_file(a):
 
 
 def read_file(a):
+    '''
+    Function to Read a File
+    '''
     if administrator:
         paths = a.split(' ')
         path = paths[1]
@@ -265,6 +305,9 @@ def read_file(a):
 
 
 def open_file(a):
+    '''
+    Function to Open a File
+    '''
     global temp_path
     if administrator:
         path = a.split(' ')
@@ -289,6 +332,9 @@ def open_file(a):
 
 
 def edit_file(a):
+    '''
+    Function to Edit a File
+    '''
     if administrator:
         lis = a.split(' ')
         bio_index = a.find('-bio')
@@ -359,7 +405,8 @@ def edit_file(a):
                     OPEN.load_data()
                     post_content = OPEN.transclude(post_content)
             if "@L" in post_content or "@l" in post_content:
-                a = input("enter artist name(press enter to default to Harry Styles): ")
+                a = input("enter artist name"
+                          "(press enter to default to Harry Styles): ")
                 if a == '':
                     greg = lfm.LastFM()
                     greg.set_apikey("95bfb090ae0b442d80486d3e80fb7df5")
@@ -389,6 +436,9 @@ def edit_file(a):
 
 
 def print_data(command):
+    '''
+    Funtion to Print Data From a File
+    '''
     global temp_path
     if administrator:
         options = command.split()[1:]
