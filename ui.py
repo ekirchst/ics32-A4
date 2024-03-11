@@ -119,10 +119,9 @@ def list_files(a):
 
 def list_items(path, recursive=False, files_only=False, search_file=None, ending=None):
     try:
-        l = Path(path).iterdir()
-        
-        files = file_sort(l, path)
-        dirs = dir(l, path)
+        lip = Path(path).iterdir()
+        files = file_sort(lip, path)
+        dirs = dir(lip, path)
 
         for file in files:
             file_name, file_extension = file.stem, file.suffix
@@ -164,16 +163,16 @@ def create_file(a):
                 username = None
                 password = None
                 bio = None
-                profile = Profile(username = username, password = password, bio = bio)
-                with open(filepath,'a') as f:
+                profile = Profile(username=username, password=password, bio=bio)
+                with open(filepath, 'a') as f:
                     print("")
-                f = open(filepath,'a')
-                profile.save_profile(path = filepath)
+                f = open(filepath, 'a')
+                profile.save_profile(path=filepath)
                 print(f'{filepath} OPENED')
                 temp_path = filepath
         print(f"this is the way  {temp_path}")
         return temp_path
-                
+
     else:
         file_path = use.get_path()
         file_name = use.file_name()
@@ -181,7 +180,7 @@ def create_file(a):
         username = input("Enter Username:  ")
         password = input("Enter Password:  ")
         bio = input("Enter bio: ")
-        profile = Profile(username = username, password = password, bio = bio)
+        profile = Profile(username=username, password=password, bio=bio)
         print(line + "      CREATED")
         with open(line, 'a') as f:
             a = "Username: " + username + '\n'
@@ -190,7 +189,7 @@ def create_file(a):
             f.write(b)
             c = "Bio: " + bio + '\n'
             f.write(c)
-        profile.save_profile(path = line)
+        profile.save_profile(path=line)
         f = open(line, 'a')
         temp_path = file_path
     print(f'{line} OPENED')
@@ -237,9 +236,9 @@ def read_file(a):
         if path[-3:] == 'dsu':
             if check_file(path):
                 with open(path, 'r') as p:
-                    l = p.readlines()
-                    if len(l) > 0:
-                        for i in l:
+                    lip = p.readlines()
+                    if len(lip) > 0:
+                        for i in lip:
                             print(i, end='')
                     else:
                         print("EMPTY")
@@ -251,14 +250,14 @@ def read_file(a):
         if path[-3:] == 'dsu':
             if check_file(path):
                 with open(path, 'r') as p:
-                    l = p.readlines()
-                    if len(l) > 0:
-                        for i in l:
+                    lip = p.readlines()
+                    if len(lip) > 0:
+                        for i in lip:
                             print(i, end='')
                     else:
                         print("EMPTY")
             elif not check_file(path):
-                print("no such file exists") 
+                print("no such file exists")
         else:
             print("please enter a file with \".dsu\" extention")
     print("")
@@ -287,7 +286,7 @@ def open_file(a):
             print(line.strip())
     comm()
     return path
-        
+
 
 def edit_file(a):
     if administrator:
@@ -299,10 +298,9 @@ def edit_file(a):
             end_quote = a.find('"', start_quote + 1)
             if start_quote != -1 and end_quote != -1:
                 bio = a[start_quote + 1:end_quote]
-        
         profile = Profile()
-        profile.load_profile(path = temp_path)
-        
+        profile.load_profile(path=temp_path)
+
         if '-usr' in lis:
             usr_index = lis.index('-usr')
             new_usr = ' '.join(lis[usr_index + 1:]).strip('"')
@@ -310,7 +308,7 @@ def edit_file(a):
             profile.save_profile(temp_path)
         if '-pwd' in lis:
             pwd_index = lis.index('-pwd')
-            new_pwd= lis[pwd_index + 1]
+            new_pwd = lis[pwd_index + 1]
             profile.password = new_pwd.strip('"')
             profile.save_profile(temp_path)
         if '-bio' in lis:
@@ -326,7 +324,7 @@ def edit_file(a):
         profile = Profile()
         print("please enter a dsu file path")
         temp_path = input()
-        profile.load_profile(path = temp_path)
+        profile.load_profile(path=temp_path)
         print("what would you like to edit?")
         print("\"-usr\" to update the username")
         print("\"-pwd\" to update password")
@@ -353,28 +351,28 @@ def edit_file(a):
                     OPEN = opw.OpenWeather()
                     OPEN.set_apikey("a3049970138b25f903d606cc94d57614")
                     OPEN.load_data()
-                    post_content = OPEN.tranclude(post_content)
+                    post_content = OPEN.transclude(post_content)
                 else:
                     c = input("enter country code: ")
                     OPEN = opw.OpenWeather(z, c)
                     OPEN.set_apikey("a3049970138b25f903d606cc94d57614")
                     OPEN.load_data()
-                    post_content = OPEN.tranclude(post_content)
+                    post_content = OPEN.transclude(post_content)
             if "@L" in post_content or "@l" in post_content:
                 a = input("enter artist name(press enter to default to Harry Styles): ")
                 if a == '':
                     greg = lfm.LastFM()
                     greg.set_apikey("95bfb090ae0b442d80486d3e80fb7df5")
-                    greg.get_artist_info()
-                    print(greg.get_artist_info())
-                    post_content = greg.tranclude(post_content)
+                    greg.load_data()
+                    print(greg.load_data())
+                    post_content = greg.transclude(post_content)
                 else:
                     greg = lfm.LastFM(a)
                     greg.set_apikey("95bfb090ae0b442d80486d3e80fb7df5")
-                    greg.get_artist_info()
-                    print(greg.get_artist_info())
-                    post_content = greg.tranclude(post_content)
-                
+                    greg.load_data()
+                    print(greg.load_data())
+                    post_content = greg.transclude(post_content)
+
             new_post = Post(post_content)
             profile.add_post(new_post)
             profile.save_profile(temp_path)
@@ -392,33 +390,66 @@ def edit_file(a):
 
 def print_data(command):
     global temp_path
-    
-    options = command.split()[1:]
+    if administrator:
+        options = command.split()[1:]
 
-    profile = Profile()
-    profile.load_profile(temp_path)
+        profile = Profile()
+        profile.load_profile(temp_path)
 
-    if '-usr' in options:
-        print("Username:", profile.username)
-    if '-pwd' in options:
-        print("Password:", profile.password)
-    if '-bio' in options:
-        print("Bio:", profile.bio)
-    if '-posts' in options:
-        for i, post in enumerate(profile._posts):
-            print(f"Post {i}: {post}")
-    if '-post' in options:
-        post_index = options.index('-post')
-        post_id = int(options[post_index + 1])
-        if 0 <= post_id < len(profile._posts):
-            print(f"Post {post_id}: {profile._posts[post_id]}")
-        else:
-            print("Invalid post ID")
-    if '-all' in options:
-        print("Username:", profile.username)
-        print("Password:", profile.password)
-        print("Bio:", profile.bio)
-        print("Posts:")
-        for i, post in enumerate(profile._posts):
-            print(f"  Post {i}: {post}")
-    comm()
+        if '-usr' in options:
+            print("Username:", profile.username)
+        if '-pwd' in options:
+            print("Password:", profile.password)
+        if '-bio' in options:
+            print("Bio:", profile.bio)
+        if '-posts' in options:
+            for i, post in enumerate(profile._posts):
+                print(f"Post {i}: {post}")
+        if '-post' in options:
+            post_index = options.index('-post')
+            post_id = int(options[post_index + 1])
+            if 0 <= post_id < len(profile._posts):
+                print(f"Post {post_id}: {profile._posts[post_id]}")
+            else:
+                print("Invalid post ID")
+        if '-all' in options:
+            print("Username:", profile.username)
+            print("Password:", profile.password)
+            print("Bio:", profile.bio)
+            print("Posts:")
+            for i, post in enumerate(profile._posts):
+                print(f"  Post {i}: {post}")
+        comm()
+    else:
+        temp = use.get_path_dsu()
+        profile = Profile()
+        profile.load_profile(temp)
+        print("what would you like to print?")
+        print("-usr to print username")
+        print("-pwd to print password")
+        print("-posts to print posts")
+        print("-all to print all")
+        options = input()
+        if '-usr' in options:
+            print("Username:", profile.username)
+        if '-pwd' in options:
+            print("Password:", profile.password)
+        if '-bio' in options:
+            print("Bio:", profile.bio)
+        if '-posts' in options:
+            for i, post in enumerate(profile._posts):
+                print(f"Post {i}: {post}")
+        if '-post' in options:
+            post_id = int(input("enter post ID"))
+            if 0 <= post_id < len(profile._posts):
+                print(f"Post {post_id}: {profile._posts[post_id]}")
+            else:
+                print("Invalid post ID")
+        if '-all' in options:
+            print("Username:", profile.username)
+            print("Password:", profile.password)
+            print("Bio:", profile.bio)
+            print("Posts:")
+            for i, post in enumerate(profile._posts):
+                print(f"  Post {i}: {post}")
+        comm()

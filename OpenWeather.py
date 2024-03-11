@@ -4,9 +4,10 @@
 from urllib import request
 import json as js
 from datetime import datetime
+from WebAPI import WebAPI
 
 
-class OpenWeather:
+class OpenWeather(WebAPI):
     '''
     Weather API Class Created to Interact with OpenWeather api
     '''
@@ -19,10 +20,6 @@ class OpenWeather:
         self.country_code = ccode
         self.url = 'https://api.openweathermap.org/data/2.5'
 
-    def set_apikey(self, apikey:str) -> None:
-        self.apikey = apikey
-
-    
     def load_data(self) -> None:
         try:
             temp = f"{self.url}/weather?zip={self.zip_code},{self.country_code}&appid={self.apikey}"
@@ -46,9 +43,8 @@ class OpenWeather:
             print(f"ERROR {e}")
         except js.JSONDecodeError as e:
             print(f"ERROR {e}")
-    
-    
-    def tranclude(self, message:str) -> str:
+
+    def transclude(self, message: str) -> str:
         if "@W" in message:
             new = message.replace("@Weather", self.description)
             return new

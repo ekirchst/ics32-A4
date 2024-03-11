@@ -23,10 +23,11 @@ Help -- Relist commands
 def comm_list():
     print(command_list)
 
+
 def start():
     ui.administration(0)
     ui.comm()
-    
+
 
 def path_help():
     print("Please enter a valid path in the form:")
@@ -40,10 +41,12 @@ def get_path():
     path = input()
     return path
 
+
 def get_path_dsu():
     print("Please enter the path of a .dsu file:")
     path = input()
     return path
+
 
 def recursive():
     print("would you like to search recursively? Y/N")
@@ -73,7 +76,8 @@ def ending():
         return ending
     else:
         return None
-    
+
+
 def search():
     print("Would you like to search for a specific file? Y/N")
     temp = input()
